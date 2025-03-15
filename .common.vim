@@ -13,9 +13,15 @@ vnoremap <tab> %
 map <F7> 30j<CR>
 map <F8> 30k<CR>
 
+" Uppercase (More convenient than using ~ and going back and forth)
+" Note that this will overwrite the contents of the z mark.
+inoremap <C-u> <esc>mzgUiw`za
+
 " nnoremap <space> :
 " in normal mode, ; to enter cmd mode
-nnoremap ; :
+" below introduces an issue shown in cmd mode, e.g. :.,.+745;157;1980;3140
+" nnoremap ; :
+nnoremap ;; :
 
 " Buffers
 " Create a new buffer and set filetype
@@ -28,10 +34,8 @@ nmap <silent> ,nj :enew<CR>:set ft=javascript<CR>
 " Close a buffer
 nnoremap ,x :bd<cr>
 nnoremap ,X :bd!<cr>
-" Wipe out all buffers
-" nmap <silent> <leader>xa :1,900bwipeout<cr>
 
-nnoremap ,h ^
+noremap ,h ^
 nnoremap ,l A
 
 " Switch between the last two files
@@ -46,7 +50,7 @@ nnoremap ,q q:
 nmap <silent> ,s :w<CR>
 
 " Reload current buffer
-nnoremap <leader>; :e!<cr>
+nnoremap ,; :e!<cr>
 
 nmap <silent> ,y :%y<CR>
 nmap <silent> ,0 :%d<CR>
@@ -66,17 +70,17 @@ nnoremap J mzJ`z
 nnoremap gw 0f=w
 
 " Del text in current line but WITHOUT <CR>
-nnoremap <leader>v 0v$hd
+nnoremap ,v 0v$hd
 
 " Insert the current datestamp
-:nnoremap <leader>d i<ESC>"=strftime("%b %d, %Y")<CR>p
-:inoremap <leader>d <SPACE><ESC>"=strftime("%b %d, %Y")<CR>P
+:nnoremap ,d i<ESC>"=strftime("%b %d, %Y")<CR>p
+:inoremap ,d <SPACE><ESC>"=strftime("%b %d, %Y")<CR>P
 
 " Substitute
 " %s in normal mode
 " selected texts in visual mode
-nnoremap <leader>r :%s///g<left><left><left>
-vnoremap <leader>r :s///g<left><left><left>
+nnoremap ,r :%s///g<left><left><left>
+vnoremap ,r :s///g<left><left><left>
 
 " Search-and-replace now is a breeze! Faster than %s/thing/another_thing/gc
 " 1. Search things usual way using /something
@@ -119,7 +123,7 @@ cnoremap <ESC><C-F> <S-Right>
 " cnoremap <ESC><C-H> <C-W>
 
 " Pull last visually selected area onto command-line mode
-cnoremap <leader>9 <C-R>=fnameescape(getline("'<")[ getpos("'<")[2]-1 : getpos("'>")[2]-1 ])<CR>
+cnoremap ,9 <C-R>=fnameescape(getline("'<")[ getpos("'<")[2]-1 : getpos("'>")[2]-1 ])<CR>
 
 " }}}
 " Highlight Word {{{
@@ -176,21 +180,6 @@ command! -range MarkUnchanged call MarkUnchanged(<line1>, <line2>)
 " vnoremap <leader>M :MarkUnchanged<cr>
 
 " }}}
-" MS to UTC {{{
-
-function! MS2UTC(ms)
-    let seconds = strpart(a:ms, 0, strlen(a:ms) - 3)
-    return substitute(system("date -ur " . seconds), "\n\n*", "", "")
-endfunction
-
-function! MS2UTCWord()
-    return MS2UTC(expand("<cword>"))
-endfunction
-
-nnoremap <leader>U :echo MS2UTCWord()<cr>
-
-" }}}
-
 " }}}
 " }}}
 nnoremap <silent> ,1 :call HiInterestingWord(1)<cr>

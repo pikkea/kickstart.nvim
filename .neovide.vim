@@ -1,4 +1,3 @@
-
 if has('gui_running')
     " GUI Vim
     let macvim_skip_colorscheme=1 " respect color settings in .vimrc
