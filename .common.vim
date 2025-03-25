@@ -199,3 +199,8 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#0070ff ctermbg=26
 noremap <silent> ,<space> :noh<cr>:call clearmatches()<cr>
 
 " }}}
+
+
+
+autocmd BufRead,BufNewFile *.pet set filetype=json
+autocmd BufRead,BufNewFile *mxml set filetype=xml

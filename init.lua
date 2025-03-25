@@ -954,3 +954,13 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    local row, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
+    if row > 0 and row <= vim.api.nvim_buf_line_count(0) then
+      vim.api.nvim_win_set_cursor(0, { row, col })
+    end
+  end,
+})

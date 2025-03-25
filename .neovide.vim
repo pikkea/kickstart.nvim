@@ -1,6 +1,14 @@
+set clipboard+=unnamedplus
+map <D-v> "+p<CR>
+map! <D-v> <C-R>+
+tmap <D-v> <C-R>+
+vmap <D-c> "+y<CR>
+
 if has('gui_running')
+
     " GUI Vim
     let macvim_skip_colorscheme=1 " respect color settings in .vimrc
+    set guifont=SauceCodePro\ Nerd\ Font:h20
 
     set mouse=a
 
@@ -23,6 +31,10 @@ if has('gui_running')
     nmap <D-]> >>
     vmap <D-[> <gv
     vmap <D-]> >gv
+
+
+    " copying and pasting
+    set clipboard+=unnamedplus
 
     let g:startify_disable_at_vimenter = 1
     autocmd VimEnter execute "normal <leader>ns"
