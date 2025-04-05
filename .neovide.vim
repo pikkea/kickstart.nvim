@@ -152,4 +152,3 @@ if exists("g:neovide")
   nnoremap <C-k> <C-u>
   nnoremap <C-j> <C-d>
 end
-

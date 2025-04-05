@@ -21,7 +21,8 @@ inoremap <C-u> <esc>mzgUiw`za
 " in normal mode, ; to enter cmd mode
 " below introduces an issue shown in cmd mode, e.g. :.,.+745;157;1980;3140
 " nnoremap ; :
-nnoremap ;; :
+" nope - need ; for key repeating
+" nnoremap ;; :
 
 " Buffers
 " Create a new buffer and set filetype

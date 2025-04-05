@@ -24,6 +24,10 @@ If you experience any errors while trying to install kickstart, run `:checkhealt
 
 local vimrc_common = vim.fn.stdpath 'config' .. '/.common.vim'
 vim.cmd.source(vimrc_common)
+
+local vimrc_plugin = vim.fn.stdpath 'config' .. '/.plugin.vim'
+vim.cmd.source(vimrc_plugin)
+
 local vimrc_gui = vim.fn.stdpath 'config' .. '/.neovide.vim'
 vim.cmd.source(vimrc_gui)
 
@@ -965,3 +969,53 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
+
+vim.opt.expandtab = true
+vim.opt.tabstop = 2 -- set tab width to 4 spaces
+vim.opt.shiftwidth = 2 -- indentation width
+vim.opt.softtabstop = 2 -- makes backspacing behave correctly
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'lua',
+  callback = function()
+    vim.opt_local.expandtab = true -- Use spaces instead of tabs
+    vim.opt_local.shiftwidth = 2 -- Indent with 2 spaces
+    vim.opt_local.tabstop = 2 -- Tab key inserts 2 spaces
+    vim.opt_local.softtabstop = 2 -- Backspace removes 2 spaces
+  end,
+})
+
+local alpha = require 'alpha'
+local dashboard = require 'alpha.themes.dashboard'
+
+-- Define bookmark files
+dashboard.section.buttons.val = {
+  dashboard.button('e', '  New file', '<cmd>ene<CR>'),
+
+  dashboard.button('r', '  > Recent', ':Telescope oldfiles<CR>'),
+
+  dashboard.button('0', '  Edit init.lua', ':e ~/.config/nvim/init.lua<CR>'),
+  dashboard.button('1', '  Edit custom/plugins/init.lua', ':e ~/.config/nvim/lua/custom/plugins/init.lua<CR>'),
+  dashboard.button('2', '  Edit .common.vim', ':e ~/.config/nvim/.common.vim<CR>'),
+  dashboard.button('p', '  Open Projects', ':e ~/projects<CR>'),
+  dashboard.button('t', '  View Todo List', ':e ~/todo.txt<CR>'),
+
+  dashboard.button('q', '  Quit', ':qa<CR>'),
+}
+
+-- Apply the config
+alpha.setup(dashboard.opts)
+
+vim.g.slimux_select_from_current_window = 1
+vim.keymap.set('n', '<leader>tl', ':SlimuxREPLSendLine<CR>', { desc = 'Send current line to tmux' })
+vim.keymap.set('v', '<leader>ts', ':SlimuxREPLSendSelection<CR>', { desc = 'Send selection to tmux' })
+vim.keymap.set('n', '<leader>tw', ':SlimuxREPLSendUntilEmptyLine<CR>', { desc = 'Send block to tmux' })
+vim.keymap.set('n', '<leader>tb', ':SlimuxREPLSendBuffer<CR>', { desc = 'Send buffer to tmux' })
+
+-- " Slimux
+-- let g:slimux_select_from_current_window = 1
+-- nnoremap <Leader>d :SlimuxREPLSendLine<CR>
+-- vnoremap <Leader>d :SlimuxREPLSendSelection<CR>
+-- nnoremap <leader>sb :SlimuxREPLSendBuffer<CR>
+-- map <Leader>sa :SlimuxShellLast<CR>
+-- map <Leader>sk :SlimuxSendKeysLast<CR>
